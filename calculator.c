@@ -55,7 +55,7 @@ int op_precedence(char op) {
         }
 }
 
-int eval_yard(int token_count, char *tokens[]) {
+Queue *eval_yard(int token_count, char *tokens[]) {
         Queue *output = new_queue();
         Stack *op_stack = new_stack();
 
@@ -114,13 +114,51 @@ int eval_yard(int token_count, char *tokens[]) {
 	printf("\n");
 
         free_stack(op_stack);
-	free_queue(output);
-        return 100;
+	//free_queue(output);
+        return output;
 }
 
-int eval_polish(char *tokens[]) {
+int do_op(int a, char op, int b) {
 
-        return 100;
+    switch (op) {
+        case '^':
+            return a * b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+	default: 
+            printf("error: not an operator");
+    }
+}
+
+int eval_polish(Queue *polish_queue) {
+	Stack *operand_stack = new_stack();
+        char *token;
+
+	for (;;) {
+
+		if (isdigit(token[0])) {
+			push(operand_stack, atoi(token));
+		} else {
+			int right = pop(operand_stack);
+			int left = pop(operand_stack);
+			int result = do_op(left, token[0], right);
+			push(operand_stack, result);
+		}
+
+		if (stack_length(operand_stack) <= 0) {
+			break;
+		}
+
+		free(token);
+	}
+		
+	return pop(operand_stack);
 }
 
 int main(int argc, char *argv[]) {
@@ -134,7 +172,7 @@ int main(int argc, char *argv[]) {
 	int token_count;
 	char **tokens = tokenize(buffer, &token_count);
 
-        int polish = eval_yard(token_count, tokens);
+        Queue *polish = eval_yard(token_count, tokens);
         // int calculated_result = solve_polish(polish);
         return 0;
         // return calculated_result;

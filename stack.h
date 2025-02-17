@@ -2,15 +2,15 @@
 #define STACK_H
 
 typedef struct {
-    char *elements;
+    void **elements;
     int top;
     int capacity;
 } Stack;
 
 Stack *new_stack();
-void push(Stack *s, char item);
-char pop(Stack *s);
-char peek(Stack *s);
+void push(Stack *s, void *element);
+void *pop(Stack *s);
+void *peek(Stack *s);
 void free_stack(Stack *s);
 int stack_length(Stack *s);
 

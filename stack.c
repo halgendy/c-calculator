@@ -8,29 +8,31 @@ Stack *new_stack() {
 	s->capacity = 2;
 	// no elements yet
 	s->top = -1;
-	s->elements = (char *)malloc(s->capacity * sizeof(char));	
+	s->elements = malloc(s->capacity * sizeof(void *));	
+	return s;
 }
 
-void push(Stack *s, char element) {
+void push(Stack *s, void *element) {
 	if (s->top >= s->capacity) {
 		s->capacity *= 2;
-		s->elements = (char *)realloc(s->elements, s->capacity * sizeof(char));
+		s->elements = realloc(s->elements, s->capacity * sizeof(void *));
 	}
 	s->elements[++s->top] = element;
 }
 
-char pop(Stack *s) {
-	if (s->top < 0) return '\0';
+void *pop(Stack *s) {
+	if (s->top < 0) return NULL;
 	return s->elements[s->top--];
 }
 
-char peek(Stack *s) {
-	if (s->top < 0) return '\0';
+void *peek(Stack *s) {
+	if (s->top < 0) return NULL;
 	return s->elements[s->top];
 }
 
 void free_stack(Stack *s) {
 	free(s->elements);
+	free(s);
 }
 
 int stack_length(Stack *s) {

@@ -1,1 +1,1 @@
-`c-calculator` is a fun experimental project that let me play with how calculator apps work on a low-level, especially with order of operations (which is where Dijkastra's Shunting-Yard Algoritm provides a solution).
+`c-calculator` is a fun experimental project that let me play with how calculator apps work on a low-level, especially with order of operations— which is where Dijkastra's Shunting-Yard Algoritm excels.
